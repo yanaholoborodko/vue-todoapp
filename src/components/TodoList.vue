@@ -42,6 +42,9 @@ export default {
       idForTodo: 3,
     };
   },
+  created() {
+      this.$store.dispatch('retrieveTodos')
+  },
   //we still need the computed properties here, but we can grab them from the store now
   computed: {
     anyRemaining() {
