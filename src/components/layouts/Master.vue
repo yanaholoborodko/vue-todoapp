@@ -1,10 +1,13 @@
 <template>
     <div id="app">
+        <!-- the advantage of using names instead of the actual links
+        is that if we change the actual route, we don`t have to change anything else, it automatically goes to that route by name -->
         <ul class="nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/">About</a></li>
-            <li><a href="/">Login</a></li>
-            <li><a href="/">Register</a></li>
+            <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+            <li><router-link :to="{ name: 'todo' }">App</router-link></li>
+            <li><router-link :to="{ name: 'about' }">About</router-link></li>
+            <li><router-link :to="{ name: 'login' }">Login</router-link></li>
+            <li><router-link :to="{ name: 'register' }">Register</router-link></li>
         </ul>
 
        <router-view></router-view>
