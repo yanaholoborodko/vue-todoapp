@@ -97,7 +97,6 @@ export default {
 
 .remove-item {
   cursor: pointer;
-  // margin-left: 14px;
   &:hover {
     color: black;
   }
@@ -111,13 +110,11 @@ export default {
 .todo-item-label {
   padding: 10px;
   border: 1px solid white;
-  // margin-left: 12px;
 }
 
 .todo-item-edit {
   font-size: 24px;
   color: #2c3e50;
-  // margin-left: 12px;
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -147,6 +144,7 @@ button {
   font-size: 14px;
   background-color: white;
   appearance: none;
+  padding: 5px;
 
   &:hover {
     background: lightgreen;
