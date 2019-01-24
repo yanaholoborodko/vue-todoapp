@@ -85,6 +85,21 @@ export const store = new Vuex.Store({
     },
     //similar to mutations, but allows for synchronous code (like any code that takes some time to complete or resolve), like ajax calls 
     actions: {
+        register(context, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/register', {
+                    name: data.name, 
+                    email: data.email,
+                    password: data.password,
+                })
+                .then(response => {
+                    resolve(response)
+                })
+                .catch(error => {
+                    reject(error)
+                })            
+            })
+        },
         destroyToken(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
             if(context.getters.loggedIn) {
