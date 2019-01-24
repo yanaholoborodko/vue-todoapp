@@ -1,2 +1,3 @@
 Hello! I`m learning to work with branches!
 
+Yeah, it goes pretty well. This is a feature branch.
