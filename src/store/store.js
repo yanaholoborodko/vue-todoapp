@@ -9,19 +9,23 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
 //defining the store, where we define our states
 export const store = new Vuex.Store({
     state: {
+        token: localStorage.getItem('access_token') || null,
         filter: 'all',
         todos: []
     },
     //with vuex we`re moving all the computed properties to getters in store
     //all getters take state as a parameter
     getters: {
+        loggedIn(state) {
+            return state.token !== null
+        },
         remaining(state) {
             return state.todos.filter(todo => !todo.completed).length
           },
-          anyRemaining(state, getters) {
+        anyRemaining(state, getters) {
             return getters.remaining != 0;
           },
-          todosFiltered(state) {
+        todosFiltered(state) {
             if (state.filter == "all") {
               return state.todos;
             } else if (state.filter == "active") {
@@ -32,7 +36,7 @@ export const store = new Vuex.Store({
       
             return state.todos;
           },
-          showClearCompletedButton(state) {
+        showClearCompletedButton(state) {
             return state.todos.filter(todo => todo.completed).length > 0;
           }
     },
@@ -72,9 +76,33 @@ export const store = new Vuex.Store({
         retrieveTodos(state, todos) {
             state.todos = todos
         },
+        retrieveToken(state, token) {
+            state.token = token
+        },
     },
     //similar to mutations, but allows for synchronous code (like any code that takes some time to complete or resolve), like ajax calls 
     actions: {
+        retrieveToken(context, credentials) {
+
+            return new Promise((resolve, reject) => {
+                axios.post('/login', {
+                    username: credentials.username,
+                    password: credentials.password,
+                })
+                .then(response => {
+                    const token = response.data.access_token
+                     
+                    localStorage.setItem('access_token', token)
+                    context.commit('retrieveToken', token)
+                    resolve(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                    reject(error)
+                })            
+            })
+
+        },
         retrieveTodos(context) {
             axios.get('/todos')
             .then(response => {
